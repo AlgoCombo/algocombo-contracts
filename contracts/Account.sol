@@ -10,6 +10,10 @@ contract Account {
 
     uint256 public tokenBalances;
 
+    // To store the ERC20 tokens deposited in this lifetime
+    address[] public tokenAddresses;
+    mapping(address => bool) private tokenAddressExists;
+
     // modifier onlyAdmin {
     //     require(msg.sender == owner || msg.sender == factory, "Only Admin Allowed");
     //     _;
@@ -34,25 +38,35 @@ contract Account {
         address _tokenAddress,
         uint256 _amount
     ) public onlyOwner {
+        require(_amount > 0, "No ERC20 tokens sent");
+
+        if (tokenAddressExists[_tokenAddress] == false) {
+            tokenAddresses.push(_tokenAddress);
+            tokenAddressExists[_tokenAddress] = true;
+        }
+
         IERC20(_tokenAddress).transfer(address(this), _amount);
     }
 
     // Withdraw Functions
     function withdraw(uint256 _amount) public onlyOwner {
         require(address(this).balance >= _amount, "Insufficient Balance");
-        payable(owner).transfer(_amount);
+        payable(msg.sender).transfer(_amount);
     }
 
     function withdrawTokens(
         address _tokenAddress,
         uint256 _amount
     ) public onlyOwner {
-        require(tokenBalance(_tokenAddress) >= _amount, "Insufficient Balance");
-        IERC20(_tokenAddress).transfer(owner, _amount);
+        require(
+            getTokenBalance(_tokenAddress) >= _amount,
+            "Insufficient Balance"
+        );
+        IERC20(_tokenAddress).transfer(msg.sender, _amount);
     }
 
     // View Functions
-    function tokenBalance(
+    function getTokenBalance(
         address _tokenAddress
     ) private view returns (uint256) {
         return IERC20(_tokenAddress).balanceOf(address(this));
