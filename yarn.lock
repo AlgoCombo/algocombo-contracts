@@ -732,6 +732,11 @@
     "@nomicfoundation/solidity-analyzer-win32-ia32-msvc" "0.1.1"
     "@nomicfoundation/solidity-analyzer-win32-x64-msvc" "0.1.1"
 
+"@openzeppelin/contracts@^3.4.2":
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-3.4.2.tgz#d81f786fda2871d1eb8a8c5a73e455753ba53527"
+  integrity sha512-z0zMCjyhhp4y7XKAcDAi3Vgms4T2PstwBdahiO0+9NaGICQKjynK3wduSRplTgk4LXmoO1yfDGO5RbjKYxtuxA==
+
 "@openzeppelin/contracts@^5.0.1":
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-5.0.1.tgz#93da90fc209a0a4ff09c1deb037fbb35e4020890"
@@ -993,6 +998,16 @@
   integrity sha512-hHxJU6PAEUn0TP4S/ZOzuTUvJWuZ6eIKeNKb5RBpODvSl6hp1Wrw4s7ATY50rklRCScUDpHzVA/DQdSjJ3UoYQ==
   dependencies:
     "@types/node" "*"
+
+"@uniswap/lib@4.0.1-alpha":
+  version "4.0.1-alpha"
+  resolved "https://registry.yarnpkg.com/@uniswap/lib/-/lib-4.0.1-alpha.tgz#2881008e55f075344675b3bca93f020b028fbd02"
+  integrity sha512-f6UIliwBbRsgVLxIaBANF6w09tYqc6Y/qXdsrbEmXHyFA7ILiKrIwRFXe1yOg8M3cksgVsO9N7yuL2DdCGQKBA==
+
+"@uniswap/v2-core@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@uniswap/v2-core/-/v2-core-1.0.0.tgz#e0fab91a7d53e8cafb5326ae4ca18351116b0844"
+  integrity sha512-BJiXrBGnN8mti7saW49MXwxDBRFiWemGetE58q8zgfnPPzQKq55ADltEILqOt6VFZ22kVeVKbF8gVd8aY3l7pA==
 
 abbrev@1:
   version "1.1.1"
@@ -3661,6 +3676,15 @@ undici@^5.14.0:
   integrity sha512-wh1pHJHnUeQV5Xa8/kyQhO7WFa8M34l026L5P/+2TYiakvGy5Rdc8jWZVyG7ieht/0WgJLEd3kcU5gKx+6GC8w==
   dependencies:
     "@fastify/busboy" "^2.0.0"
+
+uniswap-v2-periphery@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/uniswap-v2-periphery/-/uniswap-v2-periphery-1.1.0.tgz#56731fc8e948e7eda10909e553c6ffd69e1fdafd"
+  integrity sha512-4KQVzCd36wvLCwJJix7t6rrpnQihrDdAMRn9MUEoNrhFfvV/flEOt24tc0iw4eGn6NrYNeaGJVWh0cjfGzn/9Q==
+  dependencies:
+    "@openzeppelin/contracts" "^3.4.2"
+    "@uniswap/lib" "4.0.1-alpha"
+    "@uniswap/v2-core" "1.0.0"
 
 universalify@^0.1.0:
   version "0.1.2"
