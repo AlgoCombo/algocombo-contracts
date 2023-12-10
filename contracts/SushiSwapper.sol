@@ -6,15 +6,26 @@ import "uniswap-v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract SushiSwapper {
-    event Swap(
+    event SwapEvent(
         address indexed user,
         address indexed tokenIn,
         address indexed tokenOut,
-        uint256 amountIn
+        uint256 amountIn,
+        uint256 amountOut
     );
+
+    struct Swap {
+        address user;
+        address tokenIn;
+        address tokenOut;
+        uint256 amountIn;
+        uint256 amountOut;
+    }
 
     address private sushiRouterAddress;
     IUniswapV2Router02 private sushiRouter;
+
+    mapping(address => Swap[]) private swaps;
 
     constructor(address _sushiRouterAddress) {
         sushiRouterAddress = _sushiRouterAddress;
@@ -27,6 +38,9 @@ contract SushiSwapper {
         uint256 amountIn,
         uint256 amountOutMin
     ) external {
+        // Initial Balance of tokenOut of user
+        uint256 initialBalance = IERC20(tokenOut).balanceOf(msg.sender);
+
         // Transfer User's tokens to this contract
         IERC20(tokenIn).transferFrom(msg.sender, address(this), amountIn);
 
@@ -47,6 +61,34 @@ contract SushiSwapper {
             block.timestamp + 1800 // 30 minutes deadline for the transaction
         );
 
-        emit Swap(msg.sender, tokenIn, tokenOut, amountIn);
+        // Final Balance of tokenOut of user
+        uint256 finalBalance = IERC20(tokenOut).balanceOf(msg.sender);
+
+        uint256 amountOut = finalBalance - initialBalance;
+
+        Swap memory _swap = Swap(
+            msg.sender,
+            tokenIn,
+            tokenOut,
+            amountIn,
+            amountOut
+        );
+
+        swaps[msg.sender].push(_swap);
+
+        emit SwapEvent(msg.sender, tokenIn, tokenOut, amountIn, amountOut);
+    }
+
+    function getSwaps(address _user) external view returns (Swap[] memory) {
+        Swap[] memory _swaps = new Swap[](swaps[_user].length);
+
+        for (uint256 i = 0; i < swaps[_user].length; ) {
+            _swaps[i] = swaps[_user][i];
+            unchecked {
+                i++;
+            }
+        }
+
+        return _swaps;
     }
 }
