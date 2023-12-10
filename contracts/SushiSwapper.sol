@@ -6,6 +6,13 @@ import "uniswap-v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract SushiSwapper {
+    event Swap(
+        address indexed user,
+        address indexed tokenIn,
+        address indexed tokenOut,
+        uint256 amountIn
+    );
+
     address private sushiRouterAddress;
     IUniswapV2Router02 private sushiRouter;
 
@@ -39,5 +46,7 @@ contract SushiSwapper {
             msg.sender, // Txn Sender as the recipient of the swapped tokens
             block.timestamp + 1800 // 30 minutes deadline for the transaction
         );
+
+        emit Swap(msg.sender, tokenIn, tokenOut, amountIn);
     }
 }
