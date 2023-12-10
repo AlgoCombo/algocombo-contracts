@@ -1,3 +1,4 @@
+import { writeFileSync } from "fs";
 import hre from "hardhat";
 
 async function main() {
@@ -15,6 +16,8 @@ async function main() {
   console.log(
     `Sushi deployed to ${sushi.address} with SwapRouter ${SwapRouterAddress[CURRENT_CHAIN]}`
   );
+
+  writeFileSync("./abis/Sushi.json", JSON.stringify(sushi.abi, null, 4));
 }
 
 // We recommend this pattern to be able to use async/await everywhere
